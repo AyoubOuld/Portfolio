@@ -1,0 +1,28 @@
+---
+import { site } from "../data/site.js";
+---
+
+<footer>
+  <div class="wrap">
+    <span>© {site.year} {site.name}</span>
+    <span>{site.tagline}</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding: 0 0 32px;
+    background: var(--forest);
+    color: rgba(245, 239, 227, 0.6);
+    font-size: 14px;
+  }
+
+  .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(245, 239, 227, 0.15);
+  }
+</style>

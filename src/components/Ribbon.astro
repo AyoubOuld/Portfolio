@@ -1,0 +1,46 @@
+---
+interface Props {
+  id: string;
+  path: string;
+  words: string[];
+  layer: number;
+  stroke: string;
+  strokeWidth: number;
+  textColor: string;
+  fontSize: number;
+  direction?: "forward" | "backward";
+}
+
+const { id, path, words, layer, stroke, strokeWidth, textColor, fontSize, direction = "forward" } = Astro.props;
+
+const line = words.map((w) => w.toUpperCase()).join(" · ") + " · ";
+const text = line.repeat(3);
+const [from, to] = direction === "forward" ? ["0", "-900"] : ["-900", "0"];
+---
+
+<svg viewBox="0 0 1440 660" preserveAspectRatio="none" aria-hidden="true" style={`z-index: ${layer}`}>
+  <defs>
+    <path id={id} d={path} />
+  </defs>
+  <use href={`#${id}`} fill="none" stroke={stroke} stroke-width={strokeWidth} stroke-linecap="round" />
+  <text dominant-baseline="central" fill={textColor} font-size={fontSize}>
+    <textPath href={`#${id}`} startOffset={from}>
+      {text}
+      <animate attributeName="startOffset" from={from} to={to} dur="45s" repeatCount="indefinite" />
+    </textPath>
+  </text>
+</svg>
+
+<style>
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  text {
+    font-family: var(--pearl);
+    letter-spacing: 0.04em;
+  }
+</style>

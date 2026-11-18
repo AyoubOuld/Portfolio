@@ -1,0 +1,74 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { strengths } from "../data/profile.js";
+---
+
+<section id="strengths" class="section">
+  <div class="wrap">
+    <SectionHeading
+      number="04"
+      title="What I bring"
+      intro="What I can contribute to a consulting or business team from day one."
+    />
+
+    <div class="grid">
+      {strengths.map((item) => (
+        <div class="item">
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1.5px solid var(--forest);
+  }
+
+  .item {
+    padding: 24px 22px 8px 0;
+  }
+
+  .item + .item {
+    padding-left: 22px;
+    border-left: 1px solid var(--line);
+  }
+
+  h3 {
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .item:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .item + .item {
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

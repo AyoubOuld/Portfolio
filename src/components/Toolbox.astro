@@ -1,0 +1,44 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { toolbox } from "../data/profile.js";
+---
+
+<section id="toolbox" class="section">
+  <div class="wrap">
+    <SectionHeading number="06" title="Toolbox" intro="The tools and methods I reach for most." />
+
+    <div class="grid">
+      {toolbox.map(({ group, items }) => (
+        <div>
+          <h3>{group}</h3>
+          <div class="chips">
+            {items.map((item) => <span class="chip">{item}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px 32px;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+
+  .chip {
+    border-color: var(--forest);
+  }
+
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

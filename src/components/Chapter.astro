@@ -1,0 +1,270 @@
+---
+import SkillPill from "./SkillPill.astro";
+import LogoBadge from "./LogoBadge.astro";
+import Star from "./Star.astro";
+import { asset } from "../lib/asset.js";
+
+interface Logo {
+  src: string;
+  name: string;
+  wide?: boolean;
+}
+
+interface Props {
+  role: string;
+  org: string;
+  dates: string;
+  image: string;
+  alt: string;
+  logos: Logo[];
+  story: string[];
+  skills: [string, string][][];
+  dark?: boolean;
+}
+
+const { role, org, dates, image, alt, logos, story, skills, dark = false } = Astro.props;
+const LOOP_COPIES = 4;
+---
+
+<article class:list={["chapter", { dark }]}>
+  <div class="inner">
+    <div class="card">
+      <img class="photo" src={asset(image)} alt={alt} width="1400" height="939" loading="lazy" />
+      <div class="rows">
+        {skills.map((row) => (
+          <div class="row">
+            <div class="track">
+              {Array.from({ length: LOOP_COPIES }, (_, copy) =>
+                row.map(([name, detail]) => <SkillPill name={name} detail={detail} copy={copy > 0} />)
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      <span class="date">
+        {dates}
+        <span class="date-icon"><Star /></span>
+      </span>
+    </div>
+
+    <div class="text">
+      <div class="logos">
+        {logos.map((logo) => <LogoBadge {...logo} />)}
+      </div>
+      <h3>{role}</h3>
+      <p class="org">{org}</p>
+      {story.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</article>
+
+<style>
+  .chapter {
+    --pill-bg: var(--pill-green);
+    --pill-fg: var(--cream);
+    position: relative;
+    padding: 36px 24px 56px;
+    background: var(--cream);
+    color: var(--ink);
+  }
+
+  .chapter.dark {
+    --pill-bg: var(--cream);
+    --pill-fg: var(--pill-green);
+    --logo-border: transparent;
+    background: var(--pill-green);
+    color: var(--cream);
+  }
+
+  .chapter + .chapter::before {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 50%;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--cream)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232c3b30' d='M12 0c.9 6.6 4.9 10.8 12 12-7.1 1.2-11.1 5.4-12 12-.9-6.6-4.9-10.8-12-12C7.1 10.8 11.1 6.6 12 0z'/%3E%3C/svg%3E")
+      center / 56% no-repeat;
+  }
+
+  .chapter.dark + .chapter::before {
+    background-color: var(--pill-green);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f5efe3' d='M12 0c.9 6.6 4.9 10.8 12 12-7.1 1.2-11.1 5.4-12 12-.9-6.6-4.9-10.8-12-12C7.1 10.8 11.1 6.6 12 0z'/%3E%3C/svg%3E");
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .dark .card {
+    order: 2;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 26px;
+    background: var(--cream-2);
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0 0 auto 0;
+    height: 34%;
+    background: linear-gradient(rgba(44, 59, 48, 0.55), rgba(44, 59, 48, 0));
+    pointer-events: none;
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(245, 239, 227, 0.08);
+    pointer-events: none;
+  }
+
+  .photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(0.82) contrast(0.96);
+  }
+
+  .rows {
+    position: absolute;
+    z-index: 2;
+    top: 6%;
+    left: 0;
+    right: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .row {
+    overflow: hidden;
+    padding: 4px 0;
+  }
+
+  .track {
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    will-change: transform;
+    animation: slide var(--duration, 40s) linear infinite reverse;
+  }
+
+  .chapter.paused .track {
+    animation-play-state: paused;
+  }
+
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .date {
+    position: absolute;
+    z-index: 2;
+    right: 4%;
+    bottom: 6%;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 5px 5px 22px;
+    border-radius: 999px;
+    background: var(--pill-bg);
+    color: var(--pill-fg);
+    font-family: var(--plain);
+    font-weight: 500;
+    font-size: clamp(16px, 1.8vw, 26px);
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .date-icon {
+    display: grid;
+    place-items: center;
+    width: clamp(22px, 2vw, 30px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--pill-fg);
+    color: var(--pill-bg);
+  }
+
+  .date-icon :global(svg) {
+    width: 58%;
+    height: 58%;
+  }
+
+  .text {
+    max-width: 60ch;
+    padding-top: 8px;
+  }
+
+  .logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    font-family: var(--elegant);
+    font-weight: 400;
+    font-size: clamp(38px, 4.6vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.005em;
+  }
+
+  .text p {
+    margin: 0 0 18px;
+    font-family: var(--plain);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .text .org {
+    margin: 10px 0 22px;
+    font-size: 17px;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 860px) {
+    .chapter {
+      padding-top: 60px;
+    }
+
+    .chapter + .chapter::before {
+      width: 64px;
+      height: 64px;
+    }
+
+    .inner {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .dark .card {
+      order: 0;
+    }
+
+    .card {
+      border-radius: 18px;
+    }
+  }
+</style>

@@ -1,0 +1,121 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  tags: string[];
+  outcome: { label: string; text: string };
+  featured?: boolean;
+}
+
+const { title, text, tags, outcome, featured = false } = Astro.props;
+---
+
+<article class:list={["case", { featured }]}>
+  <div class="head">
+    <div class="tags">
+      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+    <h3>{title}</h3>
+  </div>
+  <div class="body">
+    <p>{text}</p>
+    <p class="outcome"><strong>{outcome.label}:</strong> {outcome.text}</p>
+  </div>
+</article>
+
+<style>
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--paper);
+  }
+
+  .head,
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .body {
+    flex: 1;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--cream-2);
+    color: var(--forest);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-size: 25px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--muted);
+  }
+
+  .outcome {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .outcome strong {
+    font-weight: 600;
+  }
+
+  .featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    border-color: var(--forest);
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .featured h3 {
+    font-size: 32px;
+  }
+
+  .featured p,
+  .featured .outcome {
+    color: rgba(245, 239, 227, 0.82);
+  }
+
+  .featured .outcome {
+    border-top-color: rgba(245, 239, 227, 0.25);
+  }
+
+  .featured .tag {
+    background: rgba(245, 239, 227, 0.14);
+    color: var(--cream);
+  }
+
+  @media (max-width: 860px) {
+    .featured {
+      grid-column: auto;
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

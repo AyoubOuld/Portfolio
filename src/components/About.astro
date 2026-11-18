@@ -1,0 +1,74 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { about } from "../data/profile.js";
+---
+
+<section id="about" class="section">
+  <div class="wrap">
+    <SectionHeading number="03" title="About" intro={about.intro} />
+
+    <div class="grid">
+      <div class="facts">
+        {about.facts.map((fact) => (
+          <div class="fact">
+            <strong>{fact.value}</strong>
+            <span>{fact.label}</span>
+          </div>
+        ))}
+      </div>
+      <div class="text">
+        {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+  }
+
+  .facts {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+  }
+
+  .fact {
+    padding-top: 10px;
+    border-top: 1.5px solid var(--forest);
+  }
+
+  .fact strong {
+    display: block;
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .fact span {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .text p {
+    max-width: 62ch;
+    margin: 0 0 18px;
+  }
+
+  .text p:first-child {
+    font-family: var(--display);
+    font-size: 25px;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

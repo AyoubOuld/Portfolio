@@ -1,0 +1,116 @@
+@font-face {
+  font-family: "TAN Pearl";
+  src: url("../assets/fonts/tan-pearl.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --forest: #0f2d1c;
+  --forest-2: #183f29;
+  --pill-green: #2c3b30;
+  --cream: #f5efe3;
+  --cream-2: #ebe3d2;
+  --paper: #fbf8f1;
+  --ink: #142319;
+  --muted: #5b6b5f;
+  --line: #d6ccb8;
+
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --pearl: "TAN Pearl", "Italiana", Georgia, serif;
+  --elegant: "Italiana", "Didot", "Bodoni 72", Georgia, serif;
+  --plain: "Barlow", "DIN Alternate", "Segoe UI", system-ui, sans-serif;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.1;
+  text-wrap: balance;
+  font-variation-settings: "SOFT" 50, "WONK" 1;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 84px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .section {
+    padding: 60px 0;
+  }
+}

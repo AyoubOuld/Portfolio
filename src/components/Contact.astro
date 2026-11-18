@@ -1,0 +1,102 @@
+---
+import { contact } from "../data/site.js";
+---
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="copy">
+      <h2>Let's <em>talk.</em></h2>
+      <p>{contact.intro}</p>
+    </div>
+    <ul class="links">
+      {contact.links.map((link) => (
+        <li>
+          {link.href ? (
+            <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel="noopener">
+              <span>{link.value}</span>
+              <span class="label">{link.label}</span>
+            </a>
+          ) : (
+            <div class="row">
+              <span>{link.value}</span>
+              <span class="label">{link.label}</span>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding: 84px 0;
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .wrap {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    align-items: end;
+  }
+
+  h2 {
+    font-size: clamp(38px, 5.5vw, 68px);
+    font-weight: 500;
+  }
+
+  em {
+    font-weight: 400;
+  }
+
+  .copy p {
+    max-width: 44ch;
+    margin: 18px 0 0;
+    font-size: 18px;
+    opacity: 0.85;
+  }
+
+  .links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links a,
+  .links .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px solid rgba(245, 239, 227, 0.25);
+    font-size: 18px;
+    text-decoration: none;
+  }
+
+  .links li:last-child a,
+  .links li:last-child .row {
+    border-bottom: 1px solid rgba(245, 239, 227, 0.25);
+  }
+
+  .label {
+    opacity: 0.7;
+  }
+
+  .links a:hover span:first-child {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 860px) {
+    .contact {
+      padding: 60px 0;
+    }
+
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

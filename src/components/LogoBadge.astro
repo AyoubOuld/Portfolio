@@ -1,0 +1,46 @@
+---
+import { asset } from "../lib/asset.js";
+
+interface Props {
+  src: string;
+  name: string;
+  wide?: boolean;
+}
+
+const { src, name, wide = false } = Astro.props;
+---
+
+<span class:list={["badge", { wide }]} title={name}>
+  <img src={asset(src)} alt={`${name} logo`} loading="lazy" />
+</span>
+
+<style>
+  .badge {
+    display: grid;
+    place-items: center;
+    height: 64px;
+    min-width: 64px;
+    padding: 0 14px;
+    border-radius: 16px;
+    border: 1px solid var(--logo-border, var(--line));
+    background: #fff;
+  }
+
+  img {
+    display: block;
+    max-width: 48px;
+    max-height: 40px;
+  }
+
+  .wide {
+    padding: 0 20px;
+  }
+
+  .wide img {
+    width: 150px;
+    max-width: none;
+    height: auto;
+    max-height: 38px;
+    object-fit: contain;
+  }
+</style>

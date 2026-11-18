@@ -1,0 +1,53 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  intro?: string;
+}
+
+const { number, title, intro } = Astro.props;
+---
+
+<div class="heading">
+  <div>
+    <span class="number">{number}</span>
+    <h2>{title}</h2>
+  </div>
+  {intro && <p>{intro}</p>}
+</div>
+
+<style>
+  .heading {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    margin-bottom: 44px;
+    align-items: baseline;
+  }
+
+  h2 {
+    font-size: clamp(32px, 4vw, 48px);
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+
+  .number {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 860px) {
+    .heading {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

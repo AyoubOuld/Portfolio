@@ -1,0 +1,144 @@
+---
+import Ribbon from "./Ribbon.astro";
+import { hero } from "../data/site.js";
+import { asset } from "../lib/asset.js";
+---
+
+<header class="hero" id="top">
+  <div class="copy">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1>Where business meets technology.</h1>
+    <p class="lede">{hero.lede}</p>
+    <div class="cta">
+      <a class="btn solid" href="#journey">See my journey</a>
+      <a class="btn ghost" href="#contact">Contact me</a>
+    </div>
+  </div>
+
+  <div class="clip">
+    <div class="stage" role="img" aria-label="Portrait of Ayoub with two ribbons looping around him">
+      <Ribbon
+        id="ribbon-back"
+        path="M-80,650 C280,660 600,430 900,350 S1240,250 1540,150"
+        words={hero.backRibbon}
+        layer={1}
+        stroke="#e3d9c4"
+        strokeWidth={44}
+        textColor="#183f29"
+        fontSize={25}
+      />
+      <img class="portrait" src={asset("/images/portrait.webp")} alt="" width="900" height="1135" fetchpriority="high" />
+      <Ribbon
+        id="ribbon-front"
+        path="M-80,560 C260,520 580,670 900,610 S1230,510 1540,570"
+        words={hero.frontRibbon}
+        layer={3}
+        stroke="#f5efe3"
+        strokeWidth={52}
+        textColor="#0f2d1c"
+        fontSize={30}
+        direction="backward"
+      />
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .stage {
+    position: relative;
+    aspect-ratio: 1440 / 660;
+  }
+
+  .portrait {
+    position: absolute;
+    z-index: 2;
+    right: 4%;
+    bottom: 0;
+    width: 28%;
+    height: auto;
+  }
+
+  .copy {
+    position: absolute;
+    z-index: 4;
+    top: 6%;
+    left: max(24px, calc((100% - 1120px) / 2 + 24px));
+    width: min(52%, 640px);
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  h1 {
+    font-family: var(--pearl);
+    font-weight: 400;
+    font-size: clamp(32px, 4.1vw, 60px);
+    line-height: 1.12;
+  }
+
+  .lede {
+    max-width: 34ch;
+    margin: 18px 0 0;
+    font-size: 19px;
+    opacity: 0.9;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 1.5px solid var(--cream);
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn.solid {
+    background: var(--cream);
+    color: var(--forest);
+  }
+
+  .btn.solid:hover {
+    background: var(--cream-2);
+  }
+
+  .btn.ghost:hover {
+    background: rgba(245, 239, 227, 0.1);
+  }
+
+  @media (max-width: 900px) {
+    .copy {
+      position: static;
+      width: auto;
+      padding: 40px 24px 8px;
+    }
+
+    .clip {
+      overflow: hidden;
+    }
+
+    .stage {
+      width: 170%;
+      margin-left: -62%;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import { site, nav } from "../data/site.js";
+---
+
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top">{site.name}</a>
+    <ul>
+      {nav.map((item) => (
+        <li>
+          <a href={item.href}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  nav {
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .mark {
+    font-family: var(--pearl);
+    font-size: 22px;
+    text-decoration: none;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+  }
+
+  ul a {
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  ul a:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 480px) {
+    ul {
+      gap: 14px;
+    }
+  }
+</style>

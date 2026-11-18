@@ -1,0 +1,82 @@
+---
+import Chapter from "./Chapter.astro";
+import SectionHeading from "./SectionHeading.astro";
+import { journey } from "../data/journey.js";
+---
+
+<section id="journey" class="journey">
+  <div class="intro">
+    <div class="wrap">
+      <SectionHeading
+        number="01"
+        title="Five desks"
+        intro="Every role I've had came with a different desk, a different view and a different set of skills. Hover over a skill to see what it meant in practice."
+      />
+    </div>
+  </div>
+
+  <div data-journey>
+    {journey.map((chapter, index) => <Chapter {...chapter} dark={index % 2 === 1} />)}
+  </div>
+
+  <div class="popover" role="tooltip" hidden data-skill-popover>
+    <strong data-title></strong>
+    <p data-body></p>
+  </div>
+</section>
+
+<script>
+  import { initSkillCarousel } from "../scripts/skill-carousel.js";
+
+  initSkillCarousel(
+    document.querySelector("[data-journey]"),
+    document.querySelector("[data-skill-popover]")
+  );
+</script>
+
+<style>
+  .intro {
+    padding: 72px 0 8px;
+  }
+
+  .intro :global(.heading) {
+    margin-bottom: 0;
+  }
+
+  .popover {
+    position: fixed;
+    z-index: 50;
+    max-width: 300px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--pill-green);
+    border-radius: 16px;
+    background: var(--cream);
+    color: var(--ink);
+    box-shadow: 0 18px 40px -18px rgba(15, 45, 28, 0.55);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+
+  .popover.show {
+    opacity: 1;
+    transform: none;
+  }
+
+  strong {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--elegant);
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--pill-green);
+  }
+
+  p {
+    margin: 0;
+    font-family: var(--plain);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+</style>
